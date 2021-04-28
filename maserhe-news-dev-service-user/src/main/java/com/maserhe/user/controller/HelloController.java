@@ -3,6 +3,8 @@ package com.maserhe.user.controller;
 import com.maserhe.api.controller.user.HelloControllerApi;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.GregorianCalendar;
+
 /**
  * 描述:
  *
@@ -13,7 +15,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class HelloController implements HelloControllerApi {
 
     public String hello(){
+
+        logger.info("sdasdasd");
         return "Hello";
     }
+
+
 
 }

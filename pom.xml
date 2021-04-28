@@ -12,6 +12,7 @@
         <module>maserhe-news-dev-model</module>
         <module>maserhe-news-dev-api</module>
         <module>maserhe-news-dev-service-user</module>
+        <module>maserhe-news-dev-mapper</module>
     </modules>
     <!--聚合工程-->
     <!--1， 模块之间平级-->
