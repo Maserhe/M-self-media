@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.GetMapping;
  * @author Maserhe
  * @create 2021-04-28 17:39
  */
-@Api(value = "controlle的标题")
+@Api(value = "controlle的标题", tags = {"标签", "标签二"})
 public interface HelloControllerApi {
 
     final static Logger logger = LoggerFactory.getLogger(HelloControllerApi.class);

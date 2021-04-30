@@ -1,6 +1,8 @@
 package com.maserhe.user.controller;
 
 import com.maserhe.api.controller.user.HelloControllerApi;
+import com.maserhe.sms.SendSMS;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.GregorianCalendar;
@@ -13,6 +15,9 @@ import java.util.GregorianCalendar;
  */
 @RestController
 public class HelloController implements HelloControllerApi {
+
+    @Autowired
+    private SendSMS sendSMS;
 
     public String hello(){
 
