@@ -1,4 +1,5 @@
 import com.maserhe.sms.SendSMS;
+import com.maserhe.utils.SMSUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -11,11 +12,5 @@ import org.springframework.boot.test.context.SpringBootTest;
 @SpringBootTest
 public class Test {
 
-    @Autowired
-    private SendSMS sendSMS;
 
-    @org.junit.Test
-    public void test() {
-        System.out.println(sendSMS.getSecretKey());
-    }
 }

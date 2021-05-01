@@ -17,7 +17,7 @@ public class UserDo {
 
     private String face;
 
-    @Column(name = "realName")
+    @Column(name = "realname")
     private String realName;
 
     private String email;

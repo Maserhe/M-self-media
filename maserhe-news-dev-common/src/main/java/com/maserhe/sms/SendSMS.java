@@ -12,13 +12,19 @@ import org.springframework.stereotype.Component;
  * @create 2021-04-30 21:08
  */
 @Component
-@PropertySource("classpath:tencent.properties")
+@PropertySource(value = "classpath:tencent.properties", encoding = "UTF-8")
 @ConfigurationProperties(prefix = "tencent")
 public class SendSMS {
 
     private String SecretId;
 
     private String SecretKey;
+
+    private String SdkAppid;
+
+    private String sign;
+
+    private String template;
 
     public String getSecretId() {
         return SecretId;
@@ -34,5 +40,29 @@ public class SendSMS {
 
     public void setSecretKey(String secretKey) {
         SecretKey = secretKey;
+    }
+
+    public String getSdkAppid() {
+        return SdkAppid;
+    }
+
+    public void setSdkAppid(String sdkAppid) {
+        SdkAppid = sdkAppid;
+    }
+
+    public String getSign() {
+        return sign;
+    }
+
+    public void setSign(String sign) {
+        this.sign = sign;
+    }
+
+    public String getTemplate() {
+        return template;
+    }
+
+    public void setTemplate(String template) {
+        this.template = template;
     }
 }
