@@ -20,21 +20,19 @@ public class CorsConfig {
 
     @Bean
     public CorsFilter getCorsFilter() {
-        //1， 添加cors的配置信息
+        // 1. 添加cors配置信息
         CorsConfiguration config = new CorsConfiguration();
-
         config.addAllowedOrigin("*");
+        // 设置是否发送cookie信息
+        config.setAllowCredentials(true);
+        // 设置允许请求的方式
+        config.addAllowedMethod("*");
         // 设置允许的header
         config.addAllowedHeader("*");
-        // 设置是否发送cookie
-        config.setAllowCredentials(true);
-
-        config.addAllowedMethod("*");
-        //2， 为url添加 映射路径
+        // 2. 为url添加映射路径
         UrlBasedCorsConfigurationSource corsSource = new UrlBasedCorsConfigurationSource();
         corsSource.registerCorsConfiguration("/**", config);
-
-        // 返回重新定义好的corsSource
+        // 3. 返回重新定义好的corsSource
         return new CorsFilter(corsSource);
     }
 }

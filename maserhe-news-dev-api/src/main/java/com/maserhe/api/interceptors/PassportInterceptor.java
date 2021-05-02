@@ -21,7 +21,6 @@ import javax.servlet.http.HttpServletResponse;
  * @author Maserhe
  * @create 2021-05-01 19:42
  */
-@Configuration
 public class PassportInterceptor extends BaseController implements HandlerInterceptor {
 
     @Autowired

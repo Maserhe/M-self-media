@@ -1,43 +1,30 @@
-package com.maserhe.entity;
+package com.maserhe.entity.VO;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 import java.util.Date;
 
-@Table(name = "app_user")
-public class UserDo {
+/**
+ * 描述:
+ *
+ * @author Maserhe
+ * @create 2021-05-02 13:31
+ */
+public class UserAccountInfoVO {
 
-    @Id
     private String id;
-
     private String mobile;
-
     private String nickname;
-
     private String face;
-
     private String realname;
-
     private String email;
-
     private Integer sex;
-
     private Date birthday;
-
     private String province;
-
     private String city;
-
     private String district;
 
-    private Integer activeStatus;
-
-    private Integer totalIncome;
-
-    private Date createdTime;
-
-    private Date updatedTime;
 
     public String getId() {
         return id;
@@ -127,42 +114,10 @@ public class UserDo {
         this.district = district;
     }
 
-    public Integer getActiveStatus() {
-        return activeStatus;
+    public UserAccountInfoVO() {
     }
 
-    public void setActiveStatus(Integer activeStatus) {
-        this.activeStatus = activeStatus;
-    }
-
-    public Integer getTotalIncome() {
-        return totalIncome;
-    }
-
-    public void setTotalIncome(Integer totalIncome) {
-        this.totalIncome = totalIncome;
-    }
-
-    public Date getCreatedTime() {
-        return createdTime;
-    }
-
-    public void setCreatedTime(Date createdTime) {
-        this.createdTime = createdTime;
-    }
-
-    public Date getUpdatedTime() {
-        return updatedTime;
-    }
-
-    public void setUpdatedTime(Date updatedTime) {
-        this.updatedTime = updatedTime;
-    }
-
-    public UserDo() {
-    }
-
-    public UserDo(String id, String mobile, String nickname, String face, String realname, String email, Integer sex, Date birthday, String province, String city, String district, Integer activeStatus, Integer totalIncome, Date createdTime, Date updatedTime) {
+    public UserAccountInfoVO(String id, String mobile, String nickname, String face, String realname, String email, Integer sex, Date birthday, String province, String city, String district) {
         this.id = id;
         this.mobile = mobile;
         this.nickname = nickname;
@@ -174,9 +129,5 @@ public class UserDo {
         this.province = province;
         this.city = city;
         this.district = district;
-        this.activeStatus = activeStatus;
-        this.totalIncome = totalIncome;
-        this.createdTime = createdTime;
-        this.updatedTime = updatedTime;
     }
 }

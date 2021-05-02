@@ -12,8 +12,10 @@ import tk.mybatis.spring.annotation.MapperScan;
  * @create 2021-04-28 17:24
  */
 @SpringBootApplication
-@MapperScan(basePackages = "com.imooc.user.mapper")
+@MapperScan(basePackages = {"com.imooc.user.mapper"})
+@ComponentScan(basePackages = {"org.n3r.idworker", "com.maserhe"})
 public class UserApplication {
+
     public static void main(String[] args) {
         SpringApplication.run(UserApplication.class, args);
     }

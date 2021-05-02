@@ -21,6 +21,7 @@ public class BaseController {
     @Autowired
     public RedisOperator redis;
 
+
     //@Autowired
     //public RestTemplate restTemplate;
 
@@ -39,8 +40,9 @@ public class BaseController {
 
     public static final String REDIS_ARTICLE_COMMENT_COUNTS = "redis_article_comment_counts";
 
-    @Value("${website.domain-name}")
+    @Value("${website.domain}")
     public String DOMAIN_NAME;
+
     public static final Integer COOKIE_MONTH = 30 * 24 * 60 * 60;
     public static final Integer COOKIE_DELETE = 0;
 
@@ -65,17 +67,13 @@ public class BaseController {
     }
 
     public void setCookie(HttpServletRequest request,
-                          HttpServletResponse response,
-                          String cookieName,
-                          String cookieValue,
-                          Integer maxAge) {
+                                 HttpServletResponse response,
+                                 String cookieName,
+                                 String cookieValue,
+                                 Integer maxAge) {
         try {
             cookieValue = URLEncoder.encode(cookieValue, "utf-8");
             setCookieValue(request, response, cookieName, cookieValue, maxAge);
-//            Cookie cookie = new Cookie(cookieName, cookieValue);
-//            cookie.setMaxAge(maxAge);
-//            cookie.setDomain("imoocnews.com");
-//            cookie.setPath("/");
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
         }
@@ -88,8 +86,8 @@ public class BaseController {
                           Integer maxAge) {
         Cookie cookie = new Cookie(cookieName, cookieValue);
         cookie.setMaxAge(maxAge);
-//        cookie.setDomain("imoocnews.com");
-        cookie.setDomain(DOMAIN_NAME);
+        cookie.setDomain("imoocnews.com");
+        //cookie.setDomain(DOMAIN_NAME);
         cookie.setPath("/");
         response.addCookie(cookie);
     }
@@ -129,5 +127,6 @@ public class BaseController {
         return userVOList;
     }
      */
+
 
 }
