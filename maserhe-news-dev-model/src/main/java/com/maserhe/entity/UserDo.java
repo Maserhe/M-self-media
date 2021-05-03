@@ -179,4 +179,25 @@ public class UserDo {
         this.createdTime = createdTime;
         this.updatedTime = updatedTime;
     }
+
+    @Override
+    public String toString() {
+        return "UserDo{" +
+                "id='" + id + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", face='" + face + '\'' +
+                ", realname='" + realname + '\'' +
+                ", email='" + email + '\'' +
+                ", sex=" + sex +
+                ", birthday=" + birthday +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", activeStatus=" + activeStatus +
+                ", totalIncome=" + totalIncome +
+                ", createdTime=" + createdTime +
+                ", updatedTime=" + updatedTime +
+                '}';
+    }
 }

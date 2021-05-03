@@ -49,10 +49,18 @@ public class UserServiceImpl implements UserService {
      * @return
      */
     @Override
+    @Transactional
     public UserDo queryUserByMobile(String mobile) {
         Example example = new Example(UserDo.class);
         example.createCriteria().andEqualTo("mobile", mobile);
         UserDo userDo = userMapper.selectOneByExample(example);
+
+        System.out.println("=======================");
+        System.out.println(userDo == null);
+        System.out.println(userDo);
+        System.out.println("======================");
+
+
         return userDo;
     }
 
@@ -85,11 +93,13 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public UserDo getUserById(String userId) {
         return userMapper.selectByPrimaryKey(userId);
     }
 
     @Override
+    @Transactional
     public void updateUserInfo(UpdateUserInfoBO updateUserInfoBO) {
         String userId = updateUserInfoBO.getId();
         UserDo userDo = new UserDo();

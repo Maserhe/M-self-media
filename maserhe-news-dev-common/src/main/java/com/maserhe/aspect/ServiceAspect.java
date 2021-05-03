@@ -27,7 +27,7 @@ public class ServiceAspect {
     public Object recordTime(ProceedingJoinPoint joinPoint) throws Throwable {
         logger.info("============开始执行{}.{}===============", joinPoint.getTarget().getClass(), joinPoint.getSignature().getName());
         long start = System.currentTimeMillis();
-        joinPoint.proceed();
+        Object proceed = joinPoint.proceed();
 
         long end = System.currentTimeMillis();
         long takeTime = start - end;
@@ -36,7 +36,7 @@ public class ServiceAspect {
         } else {
             logger.info("当前执行消耗时间{}", takeTime);
         }
-        return null;
+        return proceed;
     }
 
 

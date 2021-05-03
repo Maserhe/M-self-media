@@ -13,6 +13,8 @@
         <module>maserhe-news-dev-api</module>
         <module>maserhe-news-dev-service-user</module>
         <module>maserhe-news-dev-mapper</module>
+        <module>maserhe-news-dev-service-files</module>
+        <module>masrhe-news-dev-service-admin</module>
     </modules>
     <!--聚合工程-->
     <!--1， 模块之间平级-->
@@ -186,6 +188,8 @@
                 <artifactId>joda-time</artifactId>
                 <version>${joda-time.version}</version>
             </dependency>
+
+
 
         </dependencies>
     </dependencyManagement>

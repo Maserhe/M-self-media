@@ -1,5 +1,8 @@
 import com.maserhe.UserApplication;
+import com.maserhe.entity.UserDo;
+import com.maserhe.mapper.UserMapper;
 import com.maserhe.sms.SendSMS;
+import com.maserhe.user.service.Impl.UserServiceImpl;
 import com.maserhe.utils.RedisOperator;
 import com.maserhe.utils.SMSUtils;
 import org.junit.Test;
@@ -7,6 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+import tk.mybatis.mapper.entity.Example;
 
 
 /**
@@ -27,6 +31,12 @@ public class TestSms {
 
     @Autowired
     private RedisOperator redisOperator;
+
+    @Autowired
+    private UserServiceImpl userService;
+
+    @Autowired
+    private UserMapper userMapper;
 
     @Test
     public void test() throws Exception {
@@ -52,6 +62,16 @@ public class TestSms {
     public void test2() throws Exception {
 
         System.out.println(Math.random());
+    }
+
+    @Test
+    public void test3() {
+
+        Example example = new Example(UserDo.class);
+        example.createCriteria().andEqualTo("mobile", "15839496393");
+        UserDo userDo = userMapper.selectOneByExample(example);
+        System.out.println(userDo);
+
     }
 
 }

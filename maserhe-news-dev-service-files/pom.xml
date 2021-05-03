@@ -9,45 +9,29 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <!--
-        maserhe-news-dev-api: 接口工程管理所有的的controller
-    -->
-    <artifactId>maserhe-news-dev-api</artifactId>
+    <artifactId>maserhe-news-dev-service-files</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
     </properties>
 
+    <!--文件相关的服务操作-->
     <dependencies>
 
         <dependency>
             <groupId>com.maserhe</groupId>
-            <artifactId>maserhe-news-dev-mapper</artifactId>
+            <artifactId>maserhe-news-dev-api</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!--fastDFS-->
         <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-openfeign</artifactId>
+            <groupId>com.github.tobato</groupId>
+            <artifactId>fastdfs-client</artifactId>
         </dependency>
 
 
-        <!--开启Swagger 2-->
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger2</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>io.springfox</groupId>
-            <artifactId>springfox-swagger-ui</artifactId>
-        </dependency>
-
-        <dependency>
-            <groupId>com.github.xiaoymin</groupId>
-            <artifactId>swagger-bootstrap-ui</artifactId>
-        </dependency>
 
     </dependencies>
 

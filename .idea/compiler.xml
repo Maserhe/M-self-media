@@ -7,10 +7,12 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="maserhe-news-dev-common" />
-        <module name="maserhe-news-dev-mapper" />
         <module name="maserhe-news-dev-model" />
         <module name="maserhe-news-dev-api" />
         <module name="maserhe-news-dev-service-user" />
+        <module name="maserhe-news-dev-mapper" />
+        <module name="maserhe-news-dev-service-files" />
+        <module name="masrhe-news-dev-service-admin" />
       </profile>
     </annotationProcessing>
   </component>
@@ -20,7 +22,9 @@
       <module name="maserhe-news-dev-common" options="-parameters" />
       <module name="maserhe-news-dev-mapper" options="-parameters" />
       <module name="maserhe-news-dev-model" options="-parameters" />
+      <module name="maserhe-news-dev-service-files" options="-parameters" />
       <module name="maserhe-news-dev-service-user" options="-parameters" />
+      <module name="masrhe-news-dev-service-admin" options="-parameters" />
     </option>
   </component>
 </project>

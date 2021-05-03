@@ -6,9 +6,11 @@ import com.maserhe.api.controller.user.PassportControllerApi;
 import com.maserhe.entity.BO.RegistLoginBO;
 import com.maserhe.entity.UserDo;
 import com.maserhe.enums.UserStatus;
+import com.maserhe.exception.GraceException;
 import com.maserhe.grace.result.GraceJSONResult;
 import com.maserhe.grace.result.ResponseStatusEnum;
 import com.maserhe.user.service.Impl.UserServiceImpl;
+import com.maserhe.user.service.UserService;
 import com.maserhe.utils.IPUtil;
 import com.maserhe.utils.RedisOperator;
 import com.maserhe.utils.SMSUtils;
@@ -50,7 +52,7 @@ public class PassportController extends BaseController implements PassportContro
     private RedisOperator redisOperator;
 
     @Autowired
-    private UserServiceImpl userService;
+    private UserService userService;
 
     @Override
     public GraceJSONResult getSMSCode(String mobile, HttpServletRequest request) throws Exception {
@@ -88,6 +90,8 @@ public class PassportController extends BaseController implements PassportContro
         }
         // 3, 检测用户
         UserDo userDo = userService.queryUserByMobile(registLoginBO.getMobile());
+
+        System.out.println(userDo == null);
         if (userDo != null && userDo.getActiveStatus() == UserStatus.FROZEN.type) {
             return GraceJSONResult.errorCustom(ResponseStatusEnum.USER_FROZEN);
         } else if (userDo == null) {
@@ -104,15 +108,19 @@ public class PassportController extends BaseController implements PassportContro
         }
         // 5, 用户登陆或者注册成功后， 删除验证码
         redisOperator.del(MOBILE_SMSCODE + ":" + mobile);
-
-
         // 6， 用户状态，0 未激活跳转修改页面， 1，已经激活
         return GraceJSONResult.ok(userActiveStatus);
     }
 
     @Override
     public GraceJSONResult logout(String userId, HttpServletRequest request, HttpServletResponse response) {
-        return null;
+
+        redisOperator.del(REDIS_USER_TOKEN + ":" + userId);
+        redisOperator.del(REDIS_USER_INFO + ":" + userId);
+
+        setCookieValue(request, response, "utoken", "", 0);
+        setCookieValue(request, response, "uid", "", 0);
+        return GraceJSONResult.ok();
     }
 
     public static Map<String, String> getError(BindingResult result) {
