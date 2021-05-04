@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 
 @Api(value = "管理员admin维护", tags = {"管理员admin维护的controller"})
 @RequestMapping("adminMng")
@@ -46,7 +47,7 @@ public interface AdminMngControllerApi {
     @PostMapping("/adminLogout")
     public GraceJSONResult adminLogout(@RequestParam String adminId,
                                        HttpServletRequest request,
-                                       HttpServletResponse response);
+                                       HttpServletResponse response) throws UnsupportedEncodingException;
 
     @ApiOperation(value = "admin管理员的人脸登录", notes = "admin管理员的人脸登录", httpMethod = "POST")
     @PostMapping("/adminFaceLogin")

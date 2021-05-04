@@ -1,26 +1,32 @@
-package com.maserhe.entity.BO;
+package com.maserhe.entity.MO;
 
-import com.maserhe.entity.validate.CheckUrl;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Field;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import java.util.Date;
 
 /**
  * 描述:
  *
  * @author Maserhe
- * @create 2021-05-01 16:46
+ * @create 2021-05-04 15:13
  */
-public class SaveFriendLinkBO {
+public class FriendLinkMO {
 
+    @Id
     private String id;
-    @NotBlank(message = "友情链接名不能为空")
+
+    @Field("link_name")
     private String linkName;
-    @NotBlank(message = "友情链接地址不能为空")
-    @CheckUrl
+
+    @Field("link_url")
     private String linkUrl;
-    @NotNull(message = "请选择保留或删除")
+    @Field("is_delete")
     private Integer isDelete;
+    @Field("create_time")
+    private Date createTime;
+    @Field("update_time")
+    private Date updateTime;
 
     public String getId() {
         return id;
@@ -53,4 +59,21 @@ public class SaveFriendLinkBO {
     public void setIsDelete(Integer isDelete) {
         this.isDelete = isDelete;
     }
+
+    public Date getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
+    }
+
+    public Date getUpdateTime() {
+        return updateTime;
+    }
+
+    public void setUpdateTime(Date updateTime) {
+        this.updateTime = updateTime;
+    }
+
 }

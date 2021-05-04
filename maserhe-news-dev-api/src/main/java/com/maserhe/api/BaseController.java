@@ -127,6 +127,16 @@ public class BaseController {
         return userVOList;
     }
      */
+    public static Map<String, String> getError(BindingResult result) {
+        Map<String, String> map = new HashMap<>();
+        List<FieldError> fieldErrors = result.getFieldErrors();
+        for (FieldError error: fieldErrors) {
+            String field = error.getField();
+            String value = error.getDefaultMessage();
+            map.put(field, value);
+        }
+        return map;
+    }
 
 
 }

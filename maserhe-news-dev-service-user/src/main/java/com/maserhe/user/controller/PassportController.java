@@ -123,14 +123,5 @@ public class PassportController extends BaseController implements PassportContro
         return GraceJSONResult.ok();
     }
 
-    public static Map<String, String> getError(BindingResult result) {
-        Map<String, String> map = new HashMap<>();
-        List<FieldError> fieldErrors = result.getFieldErrors();
-        for (FieldError error: fieldErrors) {
-            String field = error.getField();
-            String value = error.getDefaultMessage();
-            map.put(field, value);
-        }
-        return map;
-    }
+
 }
