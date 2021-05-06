@@ -2,6 +2,7 @@ package com.maserhe.user.service.Impl;
 
 import com.maserhe.entity.BO.UpdateUserInfoBO;
 import com.maserhe.entity.UserDo;
+import com.maserhe.entity.VO.PublisherVO;
 import com.maserhe.enums.UserStatus;
 import com.maserhe.exception.GraceException;
 import com.maserhe.grace.result.ResponseStatusEnum;
@@ -19,6 +20,9 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 描述:
@@ -54,12 +58,6 @@ public class UserServiceImpl implements UserService {
         Example example = new Example(UserDo.class);
         example.createCriteria().andEqualTo("mobile", mobile);
         UserDo userDo = userMapper.selectOneByExample(example);
-
-        System.out.println("=======================");
-        System.out.println(userDo == null);
-        System.out.println(userDo);
-        System.out.println("======================");
-
 
         return userDo;
     }
@@ -116,5 +114,18 @@ public class UserServiceImpl implements UserService {
         String key = "redis_user_info:" + userId;
         redisOperator.del(key);
         redisOperator.set(key, JsonUtils.objectToJson(userDo));
+    }
+
+    /**
+     *
+     * @param userIdList
+     * @return
+     */
+    @Override
+    public List<PublisherVO> getUserList(List<String> userIdList) {
+        Map<String, Object> map = new HashMap<>();
+        map.put("userIdList", userIdList);
+        // List<PublisherVO> publisherList = appUserMapperCustom.getUserList(map);
+        return null;
     }
 }

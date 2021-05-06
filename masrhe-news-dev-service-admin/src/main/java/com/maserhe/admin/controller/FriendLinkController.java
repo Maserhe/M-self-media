@@ -6,7 +6,6 @@ import com.maserhe.api.controller.admin.FriendLinkControllerApi;
 import com.maserhe.entity.BO.SaveFriendLinkBO;
 import com.maserhe.entity.MO.FriendLinkMO;
 import com.maserhe.grace.result.GraceJSONResult;
-import org.checkerframework.checker.units.qual.A;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
@@ -61,6 +60,6 @@ public class FriendLinkController extends BaseController implements FriendLinkCo
 
     @Override
     public GraceJSONResult queryPortalAllFriendLinkList() {
-        return null;
+        return GraceJSONResult.ok(friendService.queryIndexAllFriendLinks());
     }
 }

@@ -2,7 +2,10 @@ package com.maserhe.user.service;
 
 import com.maserhe.entity.BO.UpdateUserInfoBO;
 import com.maserhe.entity.UserDo;
+import com.maserhe.entity.VO.PublisherVO;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 /**
  * 描述:
@@ -18,4 +21,10 @@ public interface UserService {
     public UserDo getUserById(String userId);
 
     public void updateUserInfo(UpdateUserInfoBO updateUserInfoBO);
+
+
+    /**
+     * 根据用户id查询用户
+     */
+    public List<PublisherVO> getUserList(List<String> userIdList);
 }

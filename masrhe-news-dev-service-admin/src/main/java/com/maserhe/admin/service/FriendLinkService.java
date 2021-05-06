@@ -23,4 +23,6 @@ public interface FriendLinkService {
 
     List<FriendLinkMO> findAllFriendLinks();
 
+    List<FriendLinkMO> queryIndexAllFriendLinks();
+
 }

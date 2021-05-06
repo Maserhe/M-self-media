@@ -2,6 +2,7 @@ package com.maserhe.admin.service.Impl;
 
 import com.maserhe.admin.service.FriendLinkService;
 import com.maserhe.entity.MO.FriendLinkMO;
+import com.maserhe.enums.YesOrNo;
 import com.maserhe.mapper.FriendLinkMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -42,5 +43,14 @@ public class FriendLinkServiceImpl implements FriendLinkService {
     @Override
     public List<FriendLinkMO> findAllFriendLinks() {
         return friendLinkMapper.findAll();
+    }
+
+    /**
+     * 查询所有德链接
+     * @return
+     */
+    @Override
+    public List<FriendLinkMO> queryIndexAllFriendLinks() {
+        return friendLinkMapper.getAllByIsDelete(YesOrNo.NO.type);
     }
 }

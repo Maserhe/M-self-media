@@ -27,6 +27,8 @@ import java.io.ByteArrayInputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 描述:
@@ -81,9 +83,42 @@ public class FilerUploaderController implements FileUploaderControllerApi {
         return GraceJSONResult.errorCustom(ResponseStatusEnum.FILE_FORMATTER_FAILD);
     }
 
+    /**
+     * 多文件上传
+     * @param userId
+     * @param files
+     * @return
+     * @throws Exception
+     */
     @Override
     public GraceJSONResult uploadSomeFiles(String userId, MultipartFile[] files) throws Exception {
-        return null;
+
+        // 声明一个list 用于存放多个土拍你恶的路径地址
+        List<String> list = new ArrayList<>();
+
+        if (files != null && files.length > 0) {
+            // 循环处理
+            for (MultipartFile file: files) {
+                if (file != null) {
+                    String fileName = file.getOriginalFilename();
+                    if (StringUtils.isNotBlank(fileName)) {
+                        // http://182.92.10.243:88/maserhe/M00/00/00/rBftpWAddYaABEByAAAn6E9KMW4101.png
+                        // String[] split = fileName.split("\\.");
+                        String[] fileNameArr = fileName.split("\\.");
+                        String suffixName = fileNameArr[fileNameArr.length - 1];
+                        if (!"png".equalsIgnoreCase(suffixName)
+                                && !"jpg".equalsIgnoreCase(suffixName)
+                                && !"jpeg".equalsIgnoreCase(suffixName)) {
+                            continue; // 处理下一个图片
+                        }
+                        String s = uploadService.uploadFDFS(file, suffixName);
+                        logger.info("上传头像的路径path === > " + pathPrefix + s);
+                        list.add(pathPrefix + s);
+                    }
+                }
+            }
+        }
+        return GraceJSONResult.ok(list);
     }
 
     /**
