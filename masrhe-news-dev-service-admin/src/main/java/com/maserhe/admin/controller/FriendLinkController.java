@@ -44,6 +44,10 @@ public class FriendLinkController extends BaseController implements FriendLinkCo
         friendLinkMO.setUpdateTime(new Date());
         friendService.saveOrUpdateFriendLink(friendLinkMO);
 
+
+
+
+
         return GraceJSONResult.ok(friendLinkMO);
     }
 

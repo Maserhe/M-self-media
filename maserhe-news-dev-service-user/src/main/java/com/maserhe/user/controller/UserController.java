@@ -8,6 +8,7 @@ import com.maserhe.entity.VO.AppUserVO;
 import com.maserhe.entity.VO.UserAccountInfoVO;
 import com.maserhe.grace.result.GraceJSONResult;
 import com.maserhe.grace.result.ResponseStatusEnum;
+import com.maserhe.user.service.MyFanService;
 import com.maserhe.user.service.UserService;
 import com.maserhe.utils.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
@@ -18,6 +19,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +36,9 @@ public class UserController extends BaseController implements UserControllerApi 
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MyFanService myFanService;
+
     /**
      * 获取用户的基本信息
      * @param userId
@@ -45,6 +50,17 @@ public class UserController extends BaseController implements UserControllerApi 
         // 1, 查询用户
         UserDo userDo = getUserDo(userId);
         AppUserVO appUserVo = new AppUserVO();
+
+        // 2. 查询用户的粉丝数量
+        Integer fansCount = myFanService.queryAllFansCounts(userId);
+        appUserVo.setMyFansCounts(fansCount);
+        // 3， 查询用户的关注数量
+        Integer starCount = myFanService.queryAllStarCounts(userId);
+        appUserVo.setMyFollowCounts(starCount);
+
+        System.out.println("#############");
+        System.out.println(appUserVo);
+        System.out.println("############");
         BeanUtils.copyProperties(userDo, appUserVo);
 
         return GraceJSONResult.ok(appUserVo);
@@ -78,9 +94,28 @@ public class UserController extends BaseController implements UserControllerApi 
         return GraceJSONResult.ok();
     }
 
+    /**
+     * 远程服务调用使用
+     * @param userIds
+     * @return
+     */
     @Override
     public GraceJSONResult queryByIds(String userIds) {
-        return null;
+        if (StringUtils.isBlank(userIds)) return GraceJSONResult.errorCustom(ResponseStatusEnum.USER_NOT_EXIST_ERROR);
+
+        // 将json格式的userId转化为 list
+        List<String> list = JsonUtils.jsonToList(userIds, String.class);
+        List<AppUserVO> publisherList = new ArrayList<>();
+
+        for (String s: list) {
+            UserDo userDo = getUserDo(s);
+            // 生成AppUser
+            AppUserVO appUserVO = new AppUserVO();
+            BeanUtils.copyProperties(userDo, appUserVO);
+            publisherList.add(appUserVO);
+
+        }
+        return GraceJSONResult.ok(publisherList);
     }
 
 

@@ -13,6 +13,9 @@ public class AppUserVO {
     private String nickname;
     private Integer activeStatus;
 
+    private Integer myFollowCounts;
+    private Integer myFansCounts;
+
     public AppUserVO() {
     }
 
@@ -53,5 +56,33 @@ public class AppUserVO {
 
     public void setActiveStatus(Integer activeStatus) {
         this.activeStatus = activeStatus;
+    }
+
+    public void setMyFollowCounts(Integer myFollowCounts) {
+        this.myFollowCounts = myFollowCounts;
+    }
+
+    public Integer getMyFollowCounts() {
+        return myFollowCounts;
+    }
+
+    public Integer getMyFansCounts() {
+        return myFansCounts;
+    }
+
+    public void setMyFansCounts(Integer myFansCounts) {
+        this.myFansCounts = myFansCounts;
+    }
+
+    @Override
+    public String toString() {
+        return "AppUserVO{" +
+                "id='" + id + '\'' +
+                ", face='" + face + '\'' +
+                ", nickname='" + nickname + '\'' +
+                ", activeStatus=" + activeStatus +
+                ", myFollowCounts=" + myFollowCounts +
+                ", myFansCounts=" + myFansCounts +
+                '}';
     }
 }

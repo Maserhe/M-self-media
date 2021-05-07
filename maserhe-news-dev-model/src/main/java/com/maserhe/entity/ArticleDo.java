@@ -190,4 +190,26 @@ public class ArticleDo {
     public void setContent(String content) {
         this.content = content == null ? null : content.trim();
     }
+
+    @Override
+    public String toString() {
+        return "ArticleDo{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", categoryId=" + categoryId +
+                ", articleType=" + articleType +
+                ", articleCover='" + articleCover + '\'' +
+                ", isAppoint=" + isAppoint +
+                ", articleStatus=" + articleStatus +
+                ", publishUserId='" + publishUserId + '\'' +
+                ", publishTime=" + publishTime +
+                ", readCounts=" + readCounts +
+                ", commentCounts=" + commentCounts +
+                ", mongoFileId='" + mongoFileId + '\'' +
+                ", isDelete=" + isDelete +
+                ", createTime=" + createTime +
+                ", updateTime=" + updateTime +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }

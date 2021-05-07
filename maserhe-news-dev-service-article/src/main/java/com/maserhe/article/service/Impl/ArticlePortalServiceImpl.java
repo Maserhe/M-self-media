@@ -131,6 +131,12 @@ public class ArticlePortalServiceImpl implements ArticlePortalService {
         return criteria;
     }
 
+    /**
+     * 实现自定义分页情况
+     * @param adminUserList
+     * @param page
+     * @return
+     */
     private PagedGridResult setterPagedGrid(List<?> adminUserList, Integer page) {
 
         PageInfo<?> pageList = new PageInfo<>(adminUserList);

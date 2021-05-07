@@ -1,11 +1,16 @@
 package com.maserhe.api;
 
+import com.maserhe.entity.VO.AppUserVO;
+import com.maserhe.grace.result.GraceJSONResult;
+import com.maserhe.utils.JsonUtils;
 import com.maserhe.utils.RedisOperator;
 import org.junit.platform.commons.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
+import org.springframework.web.client.RestTemplate;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
@@ -15,6 +20,7 @@ import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 public class BaseController {
 
@@ -22,8 +28,7 @@ public class BaseController {
     public RedisOperator redis;
 
 
-    //@Autowired
-    //public RestTemplate restTemplate;
+
 
     public static final String MOBILE_SMSCODE = "mobile:smscode";
     public static final String REDIS_USER_TOKEN = "redis_user_token";
@@ -137,6 +142,9 @@ public class BaseController {
         }
         return map;
     }
+
+
+
 
 
 }

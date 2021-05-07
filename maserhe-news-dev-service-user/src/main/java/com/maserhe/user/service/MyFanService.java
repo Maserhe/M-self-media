@@ -41,4 +41,19 @@ public interface MyFanService {
      * 查询粉丝数
      */
     public List<RegionRatioVO> queryRegionRatioCounts(String writerId);
+
+    /**
+     * 查询用户的粉丝数量
+     * @param writerId
+     * @return
+     */
+    public Integer queryAllFansCounts(String writerId);
+
+    /**
+     * 查询用户的关注数量
+     * @param userId
+     * @return
+     */
+    public Integer queryAllStarCounts(String userId);
+
 }
