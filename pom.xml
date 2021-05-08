@@ -15,8 +15,8 @@
         <module>maserhe-news-dev-mapper</module>
         <module>maserhe-news-dev-service-files</module>
         <module>masrhe-news-dev-service-admin</module>
-        <module>maserhe-news-dev-article</module>
         <module>maserhe-news-dev-service-article</module>
+        <module>maserhe-news-dev-article-html</module>
     </modules>
     <!--聚合工程-->
     <!--1， 模块之间平级-->

@@ -1,0 +1,37 @@
+{
+  "groups": [
+    {
+      "name": "tencent",
+      "type": "com.maserhe.sms.SendSMS",
+      "sourceType": "com.maserhe.sms.SendSMS"
+    }
+  ],
+  "properties": [
+    {
+      "name": "tencent.sdk-appid",
+      "type": "java.lang.String",
+      "sourceType": "com.maserhe.sms.SendSMS"
+    },
+    {
+      "name": "tencent.secret-id",
+      "type": "java.lang.String",
+      "sourceType": "com.maserhe.sms.SendSMS"
+    },
+    {
+      "name": "tencent.secret-key",
+      "type": "java.lang.String",
+      "sourceType": "com.maserhe.sms.SendSMS"
+    },
+    {
+      "name": "tencent.sign",
+      "type": "java.lang.String",
+      "sourceType": "com.maserhe.sms.SendSMS"
+    },
+    {
+      "name": "tencent.template",
+      "type": "java.lang.String",
+      "sourceType": "com.maserhe.sms.SendSMS"
+    }
+  ],
+  "hints": []
+}

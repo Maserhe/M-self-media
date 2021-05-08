@@ -11,6 +11,7 @@
         <module name="maserhe-news-dev-api" />
         <module name="maserhe-news-dev-service-user" />
         <module name="maserhe-news-dev-mapper" />
+        <module name="maserhe-news-dev-article-html" />
         <module name="maserhe-news-dev-service-files" />
         <module name="masrhe-news-dev-service-admin" />
         <module name="maserhe-news-dev-service-article" />
@@ -20,6 +21,7 @@
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
       <module name="maserhe-news-dev-api" options="-parameters" />
+      <module name="maserhe-news-dev-article-html" options="-parameters" />
       <module name="maserhe-news-dev-common" options="-parameters" />
       <module name="maserhe-news-dev-mapper" options="-parameters" />
       <module name="maserhe-news-dev-model" options="-parameters" />

@@ -2,6 +2,7 @@
 <project version="4">
   <component name="Encoding" native2AsciiForPropertiesFiles="true" defaultCharsetForPropertiesFiles="UTF-8">
     <file url="file://$PROJECT_DIR$/maserhe-news-dev-api/src/main/java" charset="UTF-8" />
+    <file url="file://$PROJECT_DIR$/maserhe-news-dev-article-html/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/maserhe-news-dev-common/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/maserhe-news-dev-mapper/src/main/java" charset="UTF-8" />
     <file url="file://$PROJECT_DIR$/maserhe-news-dev-model/src/main/java" charset="UTF-8" />

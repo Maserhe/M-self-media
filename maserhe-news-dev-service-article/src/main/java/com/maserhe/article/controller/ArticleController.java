@@ -4,6 +4,7 @@ import com.maserhe.api.controller.article.ArticleControllerApi;
 import com.maserhe.article.service.Impl.ArticleServiceImpl;
 import com.maserhe.entity.BO.NewArticleBO;
 import com.maserhe.entity.CategoryDo;
+import com.maserhe.entity.VO.ArticleDetailVO;
 import com.maserhe.enums.ArticleCoverType;
 import com.maserhe.enums.ArticleReviewStatus;
 import com.maserhe.enums.YesOrNo;
@@ -12,13 +13,26 @@ import com.maserhe.grace.result.ResponseStatusEnum;
 import com.maserhe.utils.JsonUtils;
 import com.maserhe.utils.PagedGridResult;
 import com.maserhe.utils.RedisOperator;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.RestTemplate;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.maserhe.api.BaseController.*;
 
@@ -30,12 +44,17 @@ import static com.maserhe.api.BaseController.*;
  */
 @RestController
 public class ArticleController implements ArticleControllerApi {
+    @Value("${freemarker.html.target}")
+    private String articlePath;
 
     @Autowired
     private ArticleServiceImpl articleService;
 
     @Autowired
     private RedisOperator redis;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     @Override
     public GraceJSONResult createArticle(@Valid NewArticleBO newArticleBO) {
@@ -125,11 +144,12 @@ public class ArticleController implements ArticleControllerApi {
     }
 
     @Override
-    public GraceJSONResult doReview(String articleId, Integer passOrNot) {
+    public GraceJSONResult doReview(String articleId, Integer passOrNot) throws Exception {
         Integer pendingStatus;
         if (passOrNot == YesOrNo.YES.type) {
             // 审核成功
             pendingStatus = ArticleReviewStatus.SUCCESS.type;
+            // 生成静态页面
         } else if (passOrNot == YesOrNo.NO.type) {
             // 审核失败
             pendingStatus = ArticleReviewStatus.FAILED.type;
@@ -139,6 +159,11 @@ public class ArticleController implements ArticleControllerApi {
 
         // 保存到数据库，更改文章的状态为审核成功或者失败
         articleService.updateArticleStatus(articleId, pendingStatus);
+
+        // 文章审核成功，生成静态页面
+        if (pendingStatus == ArticleReviewStatus.SUCCESS.type) {
+            createArticleHTML(articleId);
+        }
 
         return GraceJSONResult.ok();
 
@@ -154,5 +179,48 @@ public class ArticleController implements ArticleControllerApi {
     public GraceJSONResult withdraw(String userId, String articleId) {
         articleService.withdrawArticle(userId, articleId);
         return GraceJSONResult.ok();
+    }
+
+    public void createArticleHTML(String articleId) throws Exception {
+
+        Configuration cfg = new Configuration(Configuration.getVersion());
+        String classpath = this.getClass().getResource("/").getPath();
+        cfg.setDirectoryForTemplateLoading(new File(classpath + "templates"));
+
+        Template template = cfg.getTemplate("detail.ftl", "utf-8");
+
+        // 获得文章的详情数据
+        ArticleDetailVO detailVO = getArticleDetail(articleId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("articleDetail", detailVO);
+
+        File tempDic = new File(articlePath);
+        if (!tempDic.exists()) {
+            tempDic.mkdirs();
+        }
+
+        // articleId
+        String path = articlePath + File.separator + detailVO.getId() + ".html";
+
+        Writer out = new FileWriter(path);
+        template.process(map, out);
+        out.close();
+
+    }
+
+
+    // 发起远程调用rest，获得文章详情数据
+    public ArticleDetailVO getArticleDetail(String articleId) {
+        String url
+                = "http://www.imoocnews.com:8001/portal/article/detail?articleId=" + articleId;
+        ResponseEntity<GraceJSONResult> responseEntity
+                = restTemplate.getForEntity(url, GraceJSONResult.class);
+        GraceJSONResult bodyResult = responseEntity.getBody();
+        ArticleDetailVO detailVO = null;
+        if (bodyResult.getStatus() == 200) {
+            String detailJson = JsonUtils.objectToJson(bodyResult.getData());
+            detailVO = JsonUtils.jsonToPojo(detailJson, ArticleDetailVO.class);
+        }
+        return detailVO;
     }
 }
