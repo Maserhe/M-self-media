@@ -12,6 +12,8 @@ import com.maserhe.utils.IPUtil;
 import com.maserhe.utils.JsonUtils;
 import com.maserhe.utils.PagedGridResult;
 import com.maserhe.utils.RedisOperator;
+import freemarker.template.Configuration;
+import freemarker.template.Template;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,10 +24,10 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.Writer;
+import java.util.*;
 
 import static com.maserhe.api.BaseController.*;
 
@@ -222,5 +224,4 @@ public class ArticlePortalController implements ArticlePortalControllerApi {
         // END
         return gridResult;
     }
-
 }

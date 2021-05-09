@@ -185,7 +185,10 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     public void updateArticleToGridFS(String articleId, String articleMongoId) {
-
+        ArticleDo articleDo = new ArticleDo();
+        articleDo.setId(articleId);
+        articleDo.setMongoFileId(articleMongoId);
+        articleMapper.updateByPrimaryKeySelective(articleDo);
     }
 
     @Override

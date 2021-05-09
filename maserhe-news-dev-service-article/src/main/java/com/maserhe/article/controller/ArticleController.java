@@ -8,18 +8,24 @@ import com.maserhe.entity.VO.ArticleDetailVO;
 import com.maserhe.enums.ArticleCoverType;
 import com.maserhe.enums.ArticleReviewStatus;
 import com.maserhe.enums.YesOrNo;
+import com.maserhe.exception.GraceException;
 import com.maserhe.grace.result.GraceJSONResult;
 import com.maserhe.grace.result.ResponseStatusEnum;
 import com.maserhe.utils.JsonUtils;
 import com.maserhe.utils.PagedGridResult;
 import com.maserhe.utils.RedisOperator;
+import com.mongodb.client.gridfs.GridFSBucket;
 import freemarker.template.Configuration;
 import freemarker.template.Template;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang3.StringUtils;
+import org.bson.types.ObjectId;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
+import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -28,6 +34,7 @@ import org.springframework.web.client.RestTemplate;
 import javax.validation.Valid;
 import java.io.File;
 import java.io.FileWriter;
+import java.io.InputStream;
 import java.io.Writer;
 import java.util.Date;
 import java.util.HashMap;
@@ -55,6 +62,9 @@ public class ArticleController implements ArticleControllerApi {
 
     @Autowired
     private RestTemplate restTemplate;
+
+    @Autowired
+    private GridFSBucket gridFSBucket;
 
     @Override
     public GraceJSONResult createArticle(@Valid NewArticleBO newArticleBO) {
@@ -96,7 +106,7 @@ public class ArticleController implements ArticleControllerApi {
             }
         }
         // 插入数据库中
-        System.out.println(newArticleBO.toString());
+        // System.out.println(newArticleBO.toString());
         // 插入文章， temp是类型
         articleService.createArticle(newArticleBO, temp);
 
@@ -162,11 +172,14 @@ public class ArticleController implements ArticleControllerApi {
 
         // 文章审核成功，生成静态页面
         if (pendingStatus == ArticleReviewStatus.SUCCESS.type) {
-            createArticleHTML(articleId);
+            String path = createArticleHTMLToGridFS(articleId);
+            // 存储在数据库中 path 就是mongodb的id
+            articleService.updateArticleToGridFS(articleId, path);
+            // 调用消费端生成html 页面
+            doDownloadArticleHTML(articleId, path);
+
         }
-
         return GraceJSONResult.ok();
-
     }
 
     @Override
@@ -222,5 +235,44 @@ public class ArticleController implements ArticleControllerApi {
             detailVO = JsonUtils.jsonToPojo(detailJson, ArticleDetailVO.class);
         }
         return detailVO;
+    }
+
+    public String createArticleHTMLToGridFS(String articleId) throws Exception {
+
+        Configuration cfg = new Configuration(Configuration.getVersion());
+        String classpath = this.getClass().getResource("/").getPath();
+        cfg.setDirectoryForTemplateLoading(new File(classpath + "templates"));
+
+        Template template = cfg.getTemplate("detail.ftl", "utf-8");
+
+        // 获得文章的详情数据
+        ArticleDetailVO detailVO = getArticleDetail(articleId);
+        Map<String, Object> map = new HashMap<>();
+        map.put("articleDetail", detailVO);
+
+        // 加工页面
+        String html = FreeMarkerTemplateUtils.processTemplateIntoString(template, map);
+        System.out.println(html);
+        // 获取流
+        InputStream inputStream = IOUtils.toInputStream(html);
+        // 主键
+        ObjectId objectId = gridFSBucket.uploadFromStream(detailVO.getId() + ".html", inputStream);
+        return objectId.toString();
+    }
+
+
+    private void doDownloadArticleHTML(String articleId, String articleMongoId) {
+
+        // 创建并生成Html 静态页面
+        String url =
+                "http://html.imoocnews.com:8002/article/html/download?articleId="
+                        + articleId +
+                        "&articleMongoId="
+                        + articleMongoId;
+        ResponseEntity<Integer> responseEntity = restTemplate.getForEntity(url, Integer.class);
+        int status = responseEntity.getBody();
+        if (status != HttpStatus.OK.value()) {
+            GraceException.display(ResponseStatusEnum.ARTICLE_REVIEW_ERROR);
+        }
     }
 }

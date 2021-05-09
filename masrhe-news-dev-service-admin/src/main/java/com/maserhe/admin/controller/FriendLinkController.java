@@ -27,7 +27,6 @@ public class FriendLinkController extends BaseController implements FriendLinkCo
     @Autowired
     private FriendLinkService friendService;
 
-
     @Override
     public GraceJSONResult saveOrUpdateFriendLink(@Valid SaveFriendLinkBO saveFriendLinkBO, BindingResult result) {
 
@@ -36,6 +35,7 @@ public class FriendLinkController extends BaseController implements FriendLinkCo
             Map<String, String> map = getErrors(result);
             GraceJSONResult.errorMap(map);
         }
+
         // 保存Bo到 mongodb
         FriendLinkMO friendLinkMO = new FriendLinkMO();
         BeanUtils.copyProperties(saveFriendLinkBO, friendLinkMO);
@@ -43,11 +43,6 @@ public class FriendLinkController extends BaseController implements FriendLinkCo
         friendLinkMO.setCreateTime(new Date());
         friendLinkMO.setUpdateTime(new Date());
         friendService.saveOrUpdateFriendLink(friendLinkMO);
-
-
-
-
-
         return GraceJSONResult.ok(friendLinkMO);
     }
 

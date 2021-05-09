@@ -28,7 +28,7 @@ public class Swagger2 {
         Predicate<RequestHandler> filesPredicate = RequestHandlerSelectors.basePackage("com.maserhe.file.controller");
         Predicate<RequestHandler> adminPredicate = RequestHandlerSelectors.basePackage("com.maserhe.admin.controller");
         Predicate<RequestHandler> articlePredicate = RequestHandlerSelectors.basePackage("com.maserhe.article.controller");
-
+        Predicate<RequestHandler> htmlPredicate = RequestHandlerSelectors.basePackage("com.maserhe.html.controller");
         /*
         Predicate<RequestHandler> filesPredicate = RequestHandlerSelectors.basePackage("com.maserhe.api.controller.user");
          */
@@ -36,7 +36,7 @@ public class Swagger2 {
         return new Docket(DocumentationType.SWAGGER_2)  // 指定api类型为swagger2
                 .apiInfo(apiInfo())                 // 用于定义api文档汇总信息
                 .select()
-                .apis(Predicates.or(userPredicate, filesPredicate, adminPredicate, articlePredicate))
+                .apis(Predicates.or(userPredicate, filesPredicate, adminPredicate, articlePredicate, htmlPredicate))
                 .paths(PathSelectors.any())         // 所有controller
                 .build();
     }

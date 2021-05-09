@@ -15,4 +15,5 @@ public class HtmlApplication {
     public static void main(String[] args) {
         SpringApplication.run(HtmlApplication.class, args);
     }
+
 }
