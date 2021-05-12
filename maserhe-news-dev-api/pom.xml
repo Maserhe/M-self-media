@@ -61,6 +61,12 @@
             <artifactId>spring-boot-starter-freemarker</artifactId>
         </dependency>
 
+        <!--开启 消息队列-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-amqp</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>
