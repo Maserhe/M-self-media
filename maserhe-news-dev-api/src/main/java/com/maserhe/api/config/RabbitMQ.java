@@ -1,4 +1,4 @@
-package com.maserhe.article.config;
+package com.maserhe.api.config;
 
 import org.springframework.amqp.core.*;
 import org.springframework.beans.factory.annotation.Qualifier;
